@@ -220,10 +220,6 @@
   visibility: hidden;
 }
 
-.sidebar._active svg {
-  margin: 0;
-}
-
 .tasks-group .row {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
@@ -250,33 +246,6 @@
   -webkit-box-flex: 0;
       -ms-flex: 0 0 auto;
           flex: 0 0 auto;
-}
-
-.tasks-group__item svg {
-  fill: #797775;
-  stroke: #797775;
-  width: 18px;
-  height: 18px;
-  margin-right: 8px;
-}
-
-.tasks-group__item .cls-done {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2px;
-}
-
-.tasks-group__item .cls-star {
-  fill: none;
-  stroke-miterlimit: 10;
-  stroke-width: 0.06px;
-}
-
-.tasks-group__item .cls-calendar {
-  fill: none;
-  stroke-miterlimit: 10;
-  stroke-width: 0.06px;
 }
 
 .tasks-menu__submit {
@@ -356,6 +325,164 @@
   stroke: #2564cf;
 }
 
+.tasks-user .tasks-group__item._active {
+  color: #2564cf;
+  font-weight: 700;
+}
+
+.tasks {
+  padding: 18px 28px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 0px;
+          flex: 1 0 0;
+}
+
+.tasks .row {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.tasks__item--btn {
+  color: #2564cf;
+  font-size: 15px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.tasks__item--btn * {
+  vertical-align: middle;
+}
+
+.tasks__item--btn svg {
+  stroke: #2564cf;
+  stroke-width: 1px;
+  fill: none;
+  border: none;
+  outline: none;
+  width: 24px;
+  height: 24px;
+}
+
+.tasks__item--btn:hover {
+  background: #edebe9;
+}
+
+.tasks__item--btn.sort-tasks__print svg {
+  stroke-width: 5px;
+}
+
+.tasks__title {
+  font-weight: 700;
+  padding: 6px 0;
+  padding-left: 0;
+  display: none;
+  font-size: 18px;
+  color: #2564cf;
+  cursor: default;
+}
+
+.tasks__title-input {
+  display: block;
+  cursor: default;
+  border: 1px solid transparent;
+}
+
+.tasks__title-input:focus {
+  border: 1px solid #797775;
+  color: #797775;
+  cursor: text;
+  opacity: 0.4;
+}
+
+.tasks._main .tasks__title {
+  display: block;
+}
+
+.tasks._main .tasks__title-input {
+  display: none;
+}
+
+.app {
+  margin-top: 15px;
+}
+
+.app__interface {
+  width: 100%;
+  background: #edebe9;
+  padding: 10px 15px 20px 15px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.app__interface--text {
+  background: #fff;
+  border-bottom: 1px solid #2564cf;
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  font-size: 15px;
+  color: #797775;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.app__interface--text:focus::-webkit-input-placeholder {
+  color: #797775;
+}
+
+.app__interface--text:focus::-moz-placeholder {
+  color: #797775;
+}
+
+.app__interface--text:focus:-ms-input-placeholder {
+  color: #797775;
+}
+
+.app__interface--text:focus::-ms-input-placeholder {
+  color: #797775;
+}
+
+.app__interface--text:focus::placeholder {
+  color: #797775;
+}
+
+.app__interface--text::-webkit-input-placeholder {
+  color: #2564cf;
+}
+
+.app__interface--text::-moz-placeholder {
+  color: #2564cf;
+}
+
+.app__interface--text:-ms-input-placeholder {
+  color: #2564cf;
+}
+
+.app__interface--text::-ms-input-placeholder {
+  color: #2564cf;
+}
+
+.app__interface--text::placeholder {
+  color: #2564cf;
+}
+
+.app__interface--checkbox {
+  margin-right: 15px;
+}
+
+.app__tasks--item {
+  height: 52px;
+  padding: 8px 12px 8px 15px;
+  -webkit-box-shadow: inset 0 0 0 1px #ecf6fd;
+          box-shadow: inset 0 0 0 1px #ecf6fd;
+  background-color: #ecf6fd;
+  border-bottom: 1px solid #edebe9;
+}
+
 *,
 *::after,
 *::before {
@@ -372,7 +499,8 @@ input {
   padding: 0;
 }
 
-input[type=submit] {
+input[type=submit],
+button {
   cursor: pointer;
 }
 
