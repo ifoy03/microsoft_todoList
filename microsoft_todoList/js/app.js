@@ -52,10 +52,12 @@ function List(title, active, main) {
   this.tasks = [];
 }
 
-function Task(todo, done, important) {
+function Task(todo, done, important, from, which) {
   this.todo = todo;
   this.done = done;
   this.important = important;
+  this.from = from;
+  this.which = which;
 }
 
 let lists = [
@@ -98,6 +100,12 @@ let lists = [
     tasks: [],
     completedGr: true,
   },
+  {
+    title: "Корзина",
+    active: false,
+    main: true,
+    tasks: [],
+  },
 ];
 let completedGr = lists.find((item) => item.completedGr);
 // </main> ===================================================================================//
@@ -115,9 +123,9 @@ const listTemplate = (item, index) => {
 };
 // task template function
 const taskTemplate = (item, index) => {
-  return `<li class="app__tasks--item row ${item.done ? "_completed" : ""} ${
-    item.important ? "_important" : ""
-  }">
+  return `<li oncontextmenu="deleteTask(${index})" class="app__tasks--item row ${
+    item.done ? "_completed" : ""
+  } ${item.important ? "_important" : ""}">
   <div>
     <input onclick="doneTask(${index})" class="app__tasks--checkbox" type="checkbox" ${
     item.done ? "checked" : ""
@@ -164,8 +172,8 @@ const createList = (title, active = false, main = false) => {
 };
 const updateTasksList = () => {
   tasksBlock.innerHTML = "";
-  currentList.tasks.forEach((item, index, array) => {
-    tasksBlock.innerHTML += taskTemplate(item, index);
+  currentList.tasks.forEach((item, index) => {
+    tasksBlock.innerHTML += taskTemplate(item, index, item.from);
   });
 };
 const showActiveList = () => {
@@ -173,20 +181,41 @@ const showActiveList = () => {
   updateTasksList();
 };
 
-const createTask = (todo, done = false, important = false) => {
+const createTask = (
+  todo,
+  done = false,
+  important = false,
+  from = null,
+  which = null
+) => {
   if (currentList) {
     if (todo) {
-      currentList.tasks.push(new Task(todo, done, important));
+      currentList.tasks.push(
+        new Task(todo, done, important, currentList, currentList.tasks.length)
+      );
     }
     markAsDoneTask();
     updateTasksList();
   } else if (!lists.length) alert("Создайте список !");
 };
+const deleteTask = (index) => {
+  window.event.preventDefault();
+  currentList.tasks.splice(index, 1);
+  updateTasksList();
+  updateList();
+};
 
 const doneTask = (index) => {
   currentList.tasks[index].done = !currentList.tasks[index].done;
-  markAsDoneTask();
-  updateTasksList();
+  checkSound();
+  if (currentList.tasks[index].done) {
+    let taskLi = document.querySelectorAll(".app__tasks--item");
+    taskLi[index].classList.add("_completedAnim");
+  }
+  setTimeout(function () {
+    markAsDoneTask();
+    updateTasksList();
+  }, 100);
 };
 const markAsDoneTask = () => {
   currentList.tasks.forEach((item, index, array) => {
@@ -202,11 +231,16 @@ const initApp = () => {
   activeListDeterminer();
   showActiveList();
 };
-
+const checkSound = () => {
+  let audio = new Audio(); // Создаём новый элемент Audio
+  audio.src = "../files/audio/checkmark.mp3"; // Указываем путь к звуку "клика"
+  audio.autoplay = true; // Автоматически запускаем
+};
 listInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     createTask(listInput.value, listInputCheckbox.checked);
     listInput.value = "";
+    listInputCheckbox.checked = false;
   }
 });
 listsBlockInput.addEventListener("keypress", (e) => {
